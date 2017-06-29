@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 
 #require "AWSRequestV4.class.nut:1.0.2"
-#require "AWSSQS.lib.nut:1.0.0"
+#require "AWSSQS.agent.lib.nut:1.0.0"
 
 
 // Configure these parameters see example/README.md for details
