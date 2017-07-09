@@ -41,7 +41,7 @@ sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
 
 ### DeleteMessage(params, cb)
 Deletes the specified message from the specified queue. You specify the message by using the message's receipt handle and not the MessageId you receive when you send the message.
-[here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessage.html)
+Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessage.html) for more information
 
  Parameter            |       Type     | Description
 ----------------------| -------------- | -----------
@@ -72,7 +72,7 @@ sqs.DeleteMessage(deleteParams, function(res) {
 
 ### DeleteMessageBatch(params, cb)
 Deletes up to ten messages from the specified queue. This is a batch version of DeleteMessage. The result of the action on each message is reported individually in the response.
-[here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessageBatch.html)
+Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessageBatch.html) for more information
 
  Parameter       |       Type     | Description
 -----------------| -------------- | -----------
@@ -86,6 +86,8 @@ Parameter                          | Type    | Required | Description
 -----------------------------------|-------- |--------  |--------------------------
 QueueUrl                           | String  | Yes      | The URL of the Amazon SQS queue from which messages are deleted
 DeleteMessageBatchRequestEntry.`<N>`.`<X>` | String  | Yes      | A list of DeleteMessageBatchResultEntry items. Where N is the message entry number and X is the SendMessageBatchResultEntry parameter.
+
+
 
 #### DeleteMessageBatchRequestEntry
 
@@ -115,7 +117,7 @@ _sqs.DeleteMessageBatch(deleteParams, function(res) {
 
 ### ReceiveMessage(params, cb)
 Retrieves one or more messages (up to 10), from the specified queue.
-[here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html)
+Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html) for more information
 
  Parameter |       Type     | Description
 ---------- | -------------- | -----------
@@ -161,7 +163,7 @@ sqs.ReceiveMessage(receiveParams, function(res) {
 
 ### SendMessage(params, cb)
 Delivers a message to the specified queue.
-[here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html)
+Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html) for more information
 
  Parameter          |       Type     | Description
 ------------------- | -------------- | -----------
@@ -199,7 +201,7 @@ sqs.SendMessage(sendParams, function(res) {
 
 ### SendMessageBatch(params, cb)
 Delivers up to ten messages to the specified queue.
-[here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html)
+Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html) for more information
 
  Parameter             | Type           | Description
 ---------------------- | -------------- | -----------
