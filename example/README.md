@@ -4,18 +4,6 @@ This demo will show you how to send, receive and delete a message in a SQS queue
 
 As the sample code includes the private key verbatim in the source, it should be treated carefully, and not checked into version control!
 
-## Setting up a Queue in AWS SQS
-
-1. Login to the [AWS console] (https://aws.amazon.com/console/)
-1. Select Services link (on the top left of the page) and then type SQS in the search line
-1. Select Simple Queueing Service
-1. Click "Create New Queue"
-1. Enter in testQueue in the "Queue Name" section
-1. Note your AWS region
-1. Select "Standard Queue"
-1. Click "Quick-Create Queue"
-1. Note the URL of the SQS queue you are using.
-
 ## Setting up AIM Policy
 
 1. Select `Services` link (on the top left of the page) and them type `IAM` in the search line
@@ -47,6 +35,18 @@ As the sample code includes the private key verbatim in the source, it should be
 1. Press `Next: Review`
 1. Press `Create user`
 1. Copy down your `Access key ID` and `Secret access key`
+
+## Setting up a Queue in AWS SQS
+
+1. Login to the [AWS console](https://aws.amazon.com/console/)
+1. Select `Services link` (on the top left of the page) and then type `SQS` in the search line
+1. Select `Simple Queueing Service`
+1. Click `Create New Queue`
+1. Enter in `testQueue` in the `Queue Name` section
+1. Note your AWS region
+1. Select `Standard Queue`
+1. Click `Quick-Create Queue`
+1. Note the URL of the SQS queue you are using
 
 ## Configure the API keys for SQS
 
