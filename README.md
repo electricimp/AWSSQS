@@ -85,7 +85,7 @@ where `params` includes
 Parameter                          | Type    | Required | Description
 -----------------------------------|-------- |--------  |--------------------------
 QueueUrl                           | String  | Yes      | The URL of the Amazon SQS queue from which messages are deleted
-DeleteMessageBatchRequestEntry.`<N>`.X | String  | Yes      | A list of DeleteMessageBatchResultEntry items. Where N is the message entry number and X is the SendMessageBatchResultEntry parameter.
+DeleteMessageBatchRequestEntry.`<N>`.`<X>` | String  | Yes      | A list of DeleteMessageBatchResultEntry items. Where N is the message entry number and X is the SendMessageBatchResultEntry parameter.
 
 #### DeleteMessageBatchRequestEntry
 
