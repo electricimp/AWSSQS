@@ -6,7 +6,9 @@ As the sample code includes the private key verbatim in the source, it should be
 
 ## Setting up a Queue in AWS SQS
 
-1. Go to the sqs console  
+1. Login to the [AWS console] (https://aws.amazon.com/console/)
+1. Select Services link (on the top left of the page) and then type SQS in the search line
+1. Select Simple Queueing Service
 1. Click "Create New Queue"
 1. Enter in testQueue in the "Queue Name" section
 1. Note your AWS region
