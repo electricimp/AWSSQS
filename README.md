@@ -37,16 +37,21 @@ const AWS_SQS_REGION = "YOUR_REGION_HERE";
 sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
 ```
 
+### action(action, params, cb)
+Performs a specified action (e.g send a message) with the required parameters(params) for the specified action.
+
+Parameter             |       Type     | Description
+--------------------- | -------------- | -----------
+**action**            | String         | The AWS SQS action that you want to perform
+**params**            | table          | Table of parameters relevant to the action
+**cb**                | function       | Callback function that takes one parameter (a response table)
 
 
-### DeleteMessage(params, cb)
+
+### When the specified action is AWSSQS_ACTION_DELETE_MESSAGE
 Deletes the specified message from the specified queue. You specify the message by using the message's receipt handle and not the MessageId you receive when you send the message.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessage.html) for more information
 
- Parameter            |       Type     | Description
-----------------------| -------------- | -----------
-**params**            | table          | Table of parameters (See API Reference)
-**cb**                | function       | Callback function that takes one parameter (a response table)
 
 where `params` includes
 
@@ -62,7 +67,7 @@ deleteParams <- {
     "QueueUrl": "AWS_SQS_URL"
     "ReceiptHandle": "RECEIPT_HANDLE"
 }
-sqs.DeleteMessage(deleteParams, function(res) {
+sqs.action(AWSSQS_ACTION_DELETE_MESSAGE, deleteParams, function(res) {
     server.log(res.statuscode);
 });
 
@@ -70,14 +75,9 @@ sqs.DeleteMessage(deleteParams, function(res) {
 
 
 
-### DeleteMessageBatch(params, cb)
+### When the specified action is AWSSQS_ACTION_DELETE_MESSAGE_BATCH
 Deletes up to ten messages from the specified queue. This is a batch version of DeleteMessage. The result of the action on each message is reported individually in the response.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessageBatch.html) for more information
-
- Parameter       |       Type     | Description
------------------| -------------- | -----------
-**params**       | table          | Table of parameters (See API Reference)
-**cb**           | function       | Callback function that takes one parameter (a response table)
 
 
 where `params` includes
@@ -107,7 +107,7 @@ local deleteParams = {
     "DeleteMessageBatchRequestEntry.1.ReceiptHandle": receipt,
 }
 
-_sqs.DeleteMessageBatch(deleteParams, function(res) {
+_sqs.action(AWSSQS_ACTION_DELETE_MESSAGE_BATCH, deleteParams, function(res) {
     server.log(res.statuscode);
 });
 
@@ -115,14 +115,10 @@ _sqs.DeleteMessageBatch(deleteParams, function(res) {
 
 
 
-### ReceiveMessage(params, cb)
+### When the specified action is AWSSQS_ACTION_RECEIVE_MESSAGE
 Retrieves one or more messages (up to 10), from the specified queue.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html) for more information
 
- Parameter |       Type     | Description
----------- | -------------- | -----------
-**params** | table          | Table of parameters (See API Reference)
-**cb**     | function       | Callback function that takes one parameter (a response table)
 
 where `params` includes
 
@@ -151,7 +147,7 @@ local receiptFinder = function(messageBody) {
 local receiveParams = {
     "QueueUrl": "AWS_SQS_URL"
 }
-sqs.ReceiveMessage(receiveParams, function(res) {
+sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
     if (res.statuscode >= 200 && res.statuscode < 300) {
         server.log(receiptFinder(res.body));
     }
@@ -161,14 +157,10 @@ sqs.ReceiveMessage(receiveParams, function(res) {
 
 
 
-### SendMessage(params, cb)
+### When the specified action is AWSSQS_ACTION_SEND_MESSAGE
 Delivers a message to the specified queue.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html) for more information
 
- Parameter          |       Type     | Description
-------------------- | -------------- | -----------
-**params** | table  | Table of parameters (See API Reference)
-**cb**              | function       | Callback function that takes one parameter (a response table)
 
 where `params` includes
 
@@ -191,7 +183,7 @@ sendParams <- {
     "MessageBody": "testMessage"
 }
 
-sqs.SendMessage(sendParams, function(res) {
+sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
     server.log(http.jsonencode(res));
 });
 
@@ -199,14 +191,10 @@ sqs.SendMessage(sendParams, function(res) {
 
 
 
-### SendMessageBatch(params, cb)
+### When the specified action is AWSSQS_ACTION_SEND_MESSAGE_BATCH
 Delivers up to ten messages to the specified queue.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html) for more information
 
- Parameter             | Type           | Description
----------------------- | -------------- | -----------
-**params**             | table          | Table of parameters (See API Reference)
-**cb**                 | function       | Callback function that takes one parameter (a response table)
 
 where `params` includes
 
@@ -240,7 +228,7 @@ local messageBatchParams = {
     "SendMessageBatchRequestEntry.2.Id": "m2",
     "SendMessageBatchRequestEntry.2.MessageBody": "testMessage2",
 }
-sqs.SendMessageBatch (messageBatchParams, function(res) {
+sqs.action(AWSSQS_ACTION_SEND_MESSAGE_BATCH, messageBatchParams, function(res) {
 
     server.log(res.statuscode);
 });
