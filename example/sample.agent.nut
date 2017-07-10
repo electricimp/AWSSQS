@@ -28,10 +28,10 @@
 
 // Configure these parameters see example/README.md for details
 
-const AWS_SQS_ACCESS_KEY_ID = "YOUR_ACCESS_KEY_ID_HERE";
-const AWS_SQS_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_ID_HERE/gFFOFxSMZHAlG2";
-const AWS_SQS_URL = "YOUR_SQS_URL_HERE";
-const AWS_SQS_REGION = "YOUR_REGION_HERE";
+const AWS_TEST_ACCESS_KEY_ID = "YOUR_ACCESS_KEY_ID_HERE";
+const AWS_TEST_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_ID_HERE";
+const AWS_TEST_REGION = "YOUR_REGION_HERE";
+const AWS_TEST_SQS_URL = "YOUR_SQS_URL_HERE";
 
 // initialise the class
 sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
@@ -57,12 +57,12 @@ receiveParams <- {
 }
 
 // send a message to the queue
-sqs.SendMessage(sendParams, function(res) {
+sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
 
     server.log("http response: " + res.statuscode);
 
     // receive a message from the queue
-    sqs.ReceiveMessage(receiveParams, function(res) {
+    sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
 
         server.log("http response: " + res.statuscode);
         // do something with res.body. This is where the md5 Message Body is located
@@ -74,7 +74,7 @@ sqs.SendMessage(sendParams, function(res) {
         }
 
         // Delete the message from the queue
-        sqs.DeleteMessage(deleteParams, function(res) {
+        sqs.action(AWSSQS_ACTION_DELETE_MESSAGE, deleteParams, function(res) {
 
             server.log("http response: " + res.statuscode);
         });
