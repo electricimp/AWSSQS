@@ -26,11 +26,11 @@
 
 
 // Please Enter your AWS keys, region and SQS URL
+
 const AWS_TEST_ACCESS_KEY_ID = "YOUR_ACCESS_KEY_ID_HERE";
 const AWS_TEST_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_ID_HERE";
-const AWS_TEST_REGION = "YOUR_REGION_HERE";
 const AWS_TEST_SQS_URL = "YOUR_SQS_URL_HERE";
-
+const AWS_TEST_REGION = "YOUR_REGION_HERE";
 
 const AWS_TEST_MESSAGE = "testMessage";
 
@@ -68,7 +68,7 @@ class AgentTestCase extends ImpTestCase {
         }
         return Promise(function(resolve, reject) {
 
-            _sqs.SendMessage(sendParams, function(res) {
+            _sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
 
                 try {
                     this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
@@ -96,7 +96,7 @@ class AgentTestCase extends ImpTestCase {
 
         return Promise(function(resolve, reject) {
 
-            sqs.SendMessage(sendParams, function(res) {
+            sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
                 try {
                     this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_FORBIDDEN, "Actual status code " + res.statuscode);
                     resolve();
@@ -127,11 +127,11 @@ class AgentTestCase extends ImpTestCase {
 
         return Promise(function(resolve, reject) {
 
-            _sqs.SendMessage(sendParams, function(res) {
+            _sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
 
                 imp.wakeup(2, function() {
 
-                    _sqs.ReceiveMessage(receiveParams, function(res) {
+                    _sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
                         try {
                             this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
                             this.assertTrue(res.body.find(AWS_TEST_MESSAGE) != null);
@@ -177,22 +177,22 @@ class AgentTestCase extends ImpTestCase {
         }
         return Promise(function(resolve, reject) {
 
-            _sqs.SendMessage(sendParams, function(res) {
+            _sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
 
-                _sqs.ReceiveMessage(receiveParams, function(res) {
+                _sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
 
                     local receipt = receiptFinder(res.body);
                     local deleteParams = {
                         "QueueUrl": AWS_TEST_SQS_URL,
                         "ReceiptHandle": receipt
                     }
-                    _sqs.DeleteMessage(deleteParams, function(res) {
+                    _sqs.action(AWSSQS_ACTION_DELETE_MESSAGE, deleteParams, function(res) {
 
                         try {
                             this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
                             imp.wakeup(2, function() {
 
-                                _sqs.ReceiveMessage(receiveParams, function(res) {
+                                _sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
                                     try {
                                         this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
                                         this.assertTrue(res.body.find(receipt) == null);
@@ -230,7 +230,7 @@ class AgentTestCase extends ImpTestCase {
 
         return Promise(function(resolve, reject) {
 
-            _sqs.DeleteMessage(deleteParams, function(res) {
+            _sqs.action(AWSSQS_ACTION_DELETE_MESSAGE, deleteParams, function(res) {
                 try {
                     this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_NOT_FOUND, "Actual status code " + res.statuscode);
                     resolve();
@@ -257,7 +257,7 @@ class AgentTestCase extends ImpTestCase {
         }
         return Promise(function(resolve, reject) {
 
-            _sqs.SendMessageBatch(messageBatchParams, function(res) {
+            _sqs.action(AWSSQS_ACTION_SEND_MESSAGE_BATCH, messageBatchParams, function(res) {
 
                 try {
                     this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
@@ -285,7 +285,7 @@ class AgentTestCase extends ImpTestCase {
         }
         return Promise(function(resolve, reject) {
 
-            _sqs.SendMessageBatch(messageBatchParams, function(res) {
+            _sqs.action(AWSSQS_ACTION_SEND_MESSAGE_BATCH, messageBatchParams, function(res) {
 
                 try {
                     this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_BAD_REQUEST, "Actual status code " + res.statuscode);
@@ -329,10 +329,10 @@ class AgentTestCase extends ImpTestCase {
         return Promise(function(resolve, reject) {
 
             // send multiple messages
-            _sqs.SendMessageBatch(messageBatchParams, function(res) {
+            _sqs.action(AWSSQS_ACTION_SEND_MESSAGE_BATCH, messageBatchParams, function(res) {
 
                 // receive multiple messages
-                _sqs.ReceiveMessage(receiveParams, function(res) {
+                _sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
 
                     // get the receipt handle and set up the deletion parameters
                     local receipt = receiptFinder(res.body);
@@ -341,7 +341,7 @@ class AgentTestCase extends ImpTestCase {
                         "DeleteMessageBatchRequestEntry.1.Id": "m1"
                         "DeleteMessageBatchRequestEntry.1.ReceiptHandle": receipt,
                     }
-                    _sqs.DeleteMessageBatch(deleteParams, function(res) {
+                    _sqs.action(AWSSQS_ACTION_DELETE_MESSAGE_BATCH, deleteParams, function(res) {
 
                         try {
                             this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_SUCCESS, "Actual status code " + res.statuscode);
@@ -387,17 +387,17 @@ class AgentTestCase extends ImpTestCase {
         return Promise(function(resolve, reject) {
 
             // send multiple messages
-            _sqs.SendMessageBatch(messageBatchParams, function(res) {
+            _sqs.action(AWSSQS_ACTION_SEND_MESSAGE_BATCH, messageBatchParams, function(res) {
 
                 // receive multiple messages
-                _sqs.ReceiveMessage(receiveParams, function(res) {
+                _sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
 
                     // get the receipt handle and set up the deletion parameters
                     local receipt = receiptFinder(res.body);
                     local deleteParams = {
                         "QueueUrl": AWS_TEST_SQS_URL,
                     }
-                    _sqs.DeleteMessageBatch(deleteParams, function(res) {
+                    _sqs.action(AWSSQS_ACTION_DELETE_MESSAGE_BATCH, deleteParams, function(res) {
 
                         try {
                             this.assertTrue(res.statuscode == AWS_TEST_HTTP_RESPONSE_BAD_REQUEST, "Actual status code " + res.statuscode);

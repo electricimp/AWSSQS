@@ -22,6 +22,12 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
+const AWSSQS_ACTION_DELETE_MESSAGE = "DeleteMessage";
+const AWSSQS_ACTION_DELETE_MESSAGE_BATCH = "DeleteMessageBatch";
+const AWSSQS_ACTION_RECEIVE_MESSAGE = "ReceiveMessage";
+const AWSSQS_ACTION_SEND_MESSAGE = "SendMessage";
+const AWSSQS_ACTION_SEND_MESSAGE_BATCH ="SendMessageBatch";
+
 class AWSSQS {
 
     static VERSION = "1.0.0";
@@ -29,6 +35,7 @@ class AWSSQS {
     static TARGET_PREFIX = "SQS_20121105";
 
     _awsRequest = null;
+
 
     // 	Parameters:
     //	 region				AWS region
@@ -42,17 +49,18 @@ class AWSSQS {
         }
     }
 
-    //	Deletes the specified message from the specified queue
+
+    //	Performs the specified action
     //
     // 	Parameters:
     //    params				table of parameters to be sent as part of the request
     //    cb                    callback function to be called when response received
     //						from aws
-    function DeleteMessage(params, cb) {
+    function action(action, params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
 
         local body = {
-            "Action": "DeleteMessage",
+            "Action": action,
             "Version": "2012-11-05"
         };
 
@@ -63,88 +71,5 @@ class AWSSQS {
         _awsRequest.post("/", headers, http.urlencode(body), cb);
     }
 
-    //	Deletes up to ten messages from the specified queue
-    //
-    // 	Parameters:
-    //    params				table of parameters to be sent as part of the request
-    //    cb                    callback function to be called when response received
-    //						from aws
-    function DeleteMessageBatch(params, cb) {
-        local headers = { "Content-Type": "application/x-www-form-urlencoded" };
-
-        local body = {
-            "Action": "DeleteMessageBatch",
-            "Version": "2012-11-05"
-        };
-
-        foreach (k,v in params) {
-            body[k] <- v;
-        }
-
-        _awsRequest.post("/", headers, http.urlencode(body), cb);
-    }
-
-    //	Retrieves one or more messages (up to 10), from the specified queue
-    //
-    // 	Parameters:
-    //    params				table of parameters to be sent as part of the request
-    //    cb                    callback function to be called when response received
-    //						from aws
-    function ReceiveMessage(params, cb) {
-        local headers = { "Content-Type": "application/x-www-form-urlencoded" };
-
-        local body = {
-            "Action": "ReceiveMessage",
-            "Version": "2012-11-05"
-        };
-
-        foreach (k,v in params) {
-            body[k] <- v;
-        }
-
-        _awsRequest.post("/", headers, http.urlencode(body), cb);
-    }
-
-    //	Delivers a message to the specified queue
-    //
-    // 	Parameters:
-    //    params				table of parameters to be sent as part of the request
-    //    cb                    callback function to be called when response received
-    //						from aws
-    function SendMessage(params, cb) {
-        local headers = { "Content-Type": "application/x-www-form-urlencoded" };
-
-        local body = {
-            "Action": "SendMessage",
-            "Version": "2012-11-05"
-        };
-
-        foreach (k,v in params) {
-            body[k] <- v;
-        }
-
-        _awsRequest.post("/", headers, http.urlencode(body), cb);
-    }
-
-    //	Delivers up to ten messages to the specified queue
-    //
-    // 	Parameters:
-    //    params				table of parameters to be sent as part of the request
-    //    cb                    callback function to be called when response received
-    //						from aws
-    function SendMessageBatch(params, cb) {
-        local headers = { "Content-Type": "application/x-www-form-urlencoded" };
-
-        local body = {
-            "Action": "SendMessageBatch",
-            "Version": "2012-11-05"
-        };
-
-        foreach (k,v in params) {
-            body[k] <- v;
-        }
-
-        _awsRequest.post("/", headers, http.urlencode(body), cb);
-    }
 
 }
