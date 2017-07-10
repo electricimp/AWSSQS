@@ -53,7 +53,7 @@ Deletes the specified message from the specified queue. You specify the message 
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessage.html) for more information
 
 
-where `params` includes
+where AWSSQS_ACTION_DELETE_MESSAGE `params` includes
 
 Parameter    | Type    |Required | Description             
 -------------|-------- |-------- |--------------------------
@@ -80,7 +80,7 @@ Deletes up to ten messages from the specified queue. This is a batch version of 
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessageBatch.html) for more information
 
 
-where `params` includes
+where AWSSQS_ACTION_DELETE_MESSAGE_BATCH `params` includes
 
 Parameter                          | Type    | Required | Description
 -----------------------------------|-------- |--------  |--------------------------
@@ -120,7 +120,7 @@ Retrieves one or more messages (up to 10), from the specified queue.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html) for more information
 
 
-where `params` includes
+where AWSSQS_ACTION_RECEIVE_MESSAGE `params` includes
 
 Parameter               | Type     			| Required | Default | Description
 ----------------------  | ----------------- | -------- | ------- | -----
@@ -162,7 +162,7 @@ Delivers a message to the specified queue.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html) for more information
 
 
-where `params` includes
+where AWSSQS_ACTION_SEND_MESSAGE `params` includes
 
 Parameter             	 | Type      				   | Required | Default | Description
 ------------------------ |---------------------------- |----------|-------- | ----------
@@ -196,7 +196,7 @@ Delivers up to ten messages to the specified queue.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html) for more information
 
 
-where `params` includes
+where AWSSQS_ACTION_SEND_MESSAGE_BATCH `params` includes
 
 Parameter                        | Type    | Required   | Description
 ---------------------------------|---------|------------|-----------
