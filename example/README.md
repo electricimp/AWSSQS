@@ -54,10 +54,10 @@ At the top of the sample.agent.nut there are three constants that need to be con
 
 Parameter                   | Description
 --------------------------- | -----------
-AWS_SQS_REGION       		| AWS region (e.g. "us-west-2")
+AWS_SQS_REGION               | AWS region (e.g. "us-west-2")
 AWS_SQS_ACCESS_KEY_ID       | IAM Access Key ID
 AWS_SQS_SECRET_ACCESS_KEY   | IAM Secret Access Key
-AWS_SQS_URL					| Your SQS queue URL
+AWS_SQS_URL                    | Your SQS queue URL
 
 
 The AWSSQS library is licensed under the [MIT License](../LICENSE).

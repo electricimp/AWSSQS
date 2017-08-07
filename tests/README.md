@@ -22,10 +22,10 @@ At the top of the agent.test.nut there are four constants that need to be config
 
 Parameter                   | Description
 --------------------------- | -----------
-AWS_TEST_REGION     		| AWS region (e.g. "us-west-2")
+AWS_TEST_REGION             | AWS region (e.g. "us-west-2")
 AWS_TEST_ACCESS_KEY_ID      | IAM Access Key ID
 AWS_TEST_SECRET_ACCESS_KEY  | IAM Secret Access Key
-AWS_TEST_SQS_URL			| Your SQS queue URL
+AWS_TEST_SQS_URL            | Your SQS queue URL
 
 ## Imptest
  Please ensure that the `.imptest` agent file includes both AWSRequestV4 library and the AWSSQS class.

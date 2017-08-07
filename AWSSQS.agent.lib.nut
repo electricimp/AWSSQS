@@ -37,9 +37,9 @@ class AWSSQS {
     _awsRequest = null;
 
 
-    // 	Parameters:
-    //	 region				AWS region
-    //   accessKeyId		AWS access key Id
+    //     Parameters:
+    //     region                AWS region
+    //   accessKeyId        AWS access key Id
     //   secretAccessKey    AWS secret access key
     constructor(region, accessKeyId, secretAccessKey) {
         if ("AWSRequestV4" in getroottable()) {
@@ -50,12 +50,12 @@ class AWSSQS {
     }
 
 
-    //	Performs the specified action
+    //    Performs the specified action
     //
-    // 	Parameters:
-    //    params				table of parameters to be sent as part of the request
+    //     Parameters:
+    //    params                table of parameters to be sent as part of the request
     //    cb                    callback function to be called when response received
-    //						from aws
+    //                        from aws
     function action(action, params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
 
