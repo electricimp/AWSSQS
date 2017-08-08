@@ -32,8 +32,6 @@ class AWSSQS {
 
     static VERSION = "1.0.0";
     static SERVICE = "sqs";
-    static TARGET_PREFIX = "SQS_20121105";
-
     _awsRequest = null;
 
 
@@ -58,18 +56,13 @@ class AWSSQS {
     //                        from aws
     function action(action, params, cb) {
         local headers = { "Content-Type": "application/x-www-form-urlencoded" };
-
         local body = {
             "Action": action,
             "Version": "2012-11-05"
         };
-
         foreach (k,v in params) {
             body[k] <- v;
         }
-
         _awsRequest.post("/", headers, http.urlencode(body), cb);
     }
-
-
 }
