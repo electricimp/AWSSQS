@@ -1,0 +1,12 @@
+.DS_Store
+*.wrench
+*.out
+.build_api_key.json
+*.swp
+utilities.nut
+.imptest
+*.out.nut
+AWSRequestV4.class.nut
+tests/agent.nut
+tests/device.nut
+finished
