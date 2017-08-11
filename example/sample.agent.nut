@@ -41,28 +41,25 @@ function receiptFinder(messageBody) {
     local finish = messageBody.find("/ReceiptHandle>");
     local receipt = messageBody.slice(start + 15, finish - 1);
     return receipt;
-}
-
+};
 
 // Send Message Parameters
-sendParams <- {
+local sendParams = {
     "QueueUrl": AWS_SQS_URL,
     "MessageBody": "testMessage"
-}
+};
 
 // Receive Message Parameters
-receiveParams <- {
+local receiveParams = {
     "QueueUrl": AWS_SQS_URL
-}
+};
 
 // send a message to the queue
 sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
-
     server.log("http response: " + res.statuscode);
 
     // receive a message from the queue
     sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
-
         server.log("http response: " + res.statuscode);
         // do something with res.body. This is where the md5 Message Body is located
 
@@ -70,13 +67,11 @@ sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
         local deleteParams = {
             "QueueUrl": AWS_SQS_URL,
             "ReceiptHandle": receiptFinder(res.body)
-        }
+        };
 
         // Delete the message from the queue
         sqs.action(AWSSQS_ACTION_DELETE_MESSAGE, deleteParams, function(res) {
-
             server.log("http response: " + res.statuscode);
         });
-
     });
 });

@@ -1,18 +1,18 @@
-# AWSSQS
+# AWSSQS - Amazon Simple Queue Service Library
 
-The helper library to implement [AWS SQS](https://aws.amazon.com/documentation/sqs/) functions from agent code.
+The helper library to implement and perform
+[Amazon SQS](https://aws.amazon.com/documentation/sqs/) actions from agent code.
 
-To add this library to your model, add the following lines to the top of your agent code:
+To add this library to your model, add the following lines to
+the top of your agent code:
 
 ```
 #require "AWSRequestV4.class.nut:1.0.2"
 #require "AWSSQS.agent.lib.nut:1.0.0"
 ```
 
-**Note: [AWSRequestV4](https://github.com/electricimp/AWSRequestV4/) must be loaded.**
-
-This class can be used to perform actions with the AWS SQS (Simple Queueing Service)
-
+**Note: [AWSRequestV4](https://github.com/electricimp/AWSRequestV4/)
+must be included to make the AWSSQS library work.**
 
 ## Class Usage
 
@@ -28,10 +28,10 @@ secretAccessKey        | string         | IAM Secret Access Key
 #### Example
 
 ```squirrel
-const AWS_SQS_ACCESS_KEY_ID = "YOUR_ACCESS_KEY_ID_HERE";
-const AWS_SQS_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_ID_HERE/gFFOFxSMZHAlG2";
-const AWS_SQS_URL = "YOUR_SQS_URL_HERE";
-const AWS_SQS_REGION = "YOUR_REGION_HERE";
+const AWS_SQS_ACCESS_KEY_ID     = "YOUR_ACCESS_KEY_ID_HERE";
+const AWS_SQS_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_ID_HERE";
+const AWS_SQS_URL               = "YOUR_SQS_URL_HERE";
+const AWS_SQS_REGION            = "YOUR_REGION_HERE";
 
 // initialise the class
 sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
@@ -40,45 +40,42 @@ sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
 ## Class Methods
 
 ### action(actionType, params, cb)
-Performs a specified action (e.g send a message) with the required parameters(params) for the specified action.
+Performs a specified action (e.g send a message) with the 
+required parameters (`params`) for the specified `action`.
 
 Parameter             |       Type     | Description
 --------------------- | -------------- | -----------
-**actionType**        | String         | The AWS SQS action that you want to perform
+**actionType**        | string         | The AWS SQS action that you want to perform (see the [table](#action-types) below)
 **params**            | table          | Table of parameters relevant to the action
 **cb**                | function       | Callback function that takes one parameter (a response table)
 
-#### actionType `params`
+#### Action Types
 
-actionType                         | Description     
+Action Type                        | Description
 ---------------------------------- | ----------------
-AWSSQS_ACTION_SEND_MESSAGE         | [send message](#send-message) Delivers a message to a specified queue
+AWSSQS_ACTION_SEND_MESSAGE         | [Send message](#send-message-action-AWSSQS_ACTION_SEND_MESSAGE) - delivers a message to a specified queue
 AWSSQS_ACTION_SEND_MESSAGE_BATCH   | [send message batch](#send-message-batch) Delivers up to ten messages to a specified queue
 AWSSQS_ACTION_RECEIVE_MESSAGE      | [receive message](#recv-message) Retrieves one or more messages (up to 10), from a specified queue
 AWSSQS_ACTION_DELETE_MESSAGE       | [delete message](#delete) Deletes the specified message from the specified queue
 AWSSQS_ACTION_DELETE_MESSAGE_BATCH | [delete message batch](#delete-batch) Deletes up to ten messages from a specified queue
 
+##### Send Message Action (`AWSSQS_ACTION_SEND_MESSAGE`)
 
-
-<a name="send-message">
-#### AWSSQS_ACTION_SEND_MESSAGE
-</a>
 Delivers a message to the specified queue.
 Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html) for more information
 
-
-##### AWSSQS_ACTION_SEND_MESSAGE `params`
+_Action Parameters (`params`):_
 
 Parameter                  | Type                         | Required | Default | Description
 ------------------------ |---------------------------- |----------|-------- | ----------
-QueueUrl                  | String                       | Yes      | N/A     | The URL of the Amazon SQS queue from which messages are deleted
-DelaySeconds               | Integer                      | No       | null    | The number of seconds to delay a specific message. Valid values: 0 to 900.
-MessageAttribute.`<N>`.Name  | String                         | No            | null    | See [here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation)
-MessageAttribute.`<N>`.Value | String or Integer or Binary | No          | null    | Message attributes allow you to provide structured metadata items (such as timestamps, geospatial data, signatures, and identifiers) about the message
-MessageAttribute.`<N>`.Type     | String                        | No       | null    | Type of MessageAttribute.N.Value determined by MessageAttribute.N.Type
-MessageBody               | String                        | Yes      | N/A     | The message to send. The maximum string size is 256 KB.
-MessageDeduplicationId     | String                       | No       | null    | This parameter applies only to FIFO (first-in-first-out) queues. The token used for deduplication of sent messages. If a message with a particular MessageDeduplicationId is sent successfully, any messages sent with the same MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute deduplication interval
-MessageGroupId             | String                       | No       | null    | This parameter applies only to FIFO (first-in-first-out) queues.The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order)
+QueueUrl                  | string                       | Yes      | N/A     | The URL of the Amazon SQS queue from which messages are deleted
+DelaySeconds               | integer                      | No       | null    | The number of seconds to delay a specific message. Valid values: 0 to 900.
+MessageAttribute.`<N>`.Name  | string                         | No            | null    | See [here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation)
+MessageAttribute.`<N>`.Value | string or integer or blob | No          | null    | Message attributes allow you to provide structured metadata items (such as timestamps, geospatial data, signatures, and identifiers) about the message
+MessageAttribute.`<N>`.Type     | string                        | No       | null    | Type of MessageAttribute.N.Value determined by MessageAttribute.N.Type
+MessageBody               | string                        | Yes      | N/A     | The message to send. The maximum string size is 256 KB.
+MessageDeduplicationId     | string                       | No       | null    | This parameter applies only to FIFO (first-in-first-out) queues. The token used for deduplication of sent messages. If a message with a particular MessageDeduplicationId is sent successfully, any messages sent with the same MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute deduplication interval
+MessageGroupId             | string                       | No       | null    | This parameter applies only to FIFO (first-in-first-out) queues.The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order)
 
 ##### Example
 
@@ -107,22 +104,22 @@ Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueSer
 
 Parameter                        | Type    | Required   | Description
 ---------------------------------|---------|------------|-----------
-QueueUrl                         | String  | Yes        | The URL of the Amazon SQS queue from which messages are deleted
-SendMessageBatchRequestEntry.`<N>`.`<X>` | String  | Yes        | A list of SendMessageBatchResultEntry items. Where N is the message entry number and X is the SendMessageBatchResultEntry parameter.
+QueueUrl                         | string  | Yes        | The URL of the Amazon SQS queue from which messages are deleted
+SendMessageBatchRequestEntry.`<N>`.`<X>` | string  | Yes        | A list of SendMessageBatchResultEntry items. Where N is the message entry number and X is the SendMessageBatchResultEntry parameter.
 
 
 ##### SendMessageBatchRequestEntry
 
 Parameter                | Type                         | Required   | Default | Description
 ------------------------ | ---------------------------- |----------- |-------- | -------
-DelaySeconds             | Integer                      | No         | null    | The number of seconds to delay a specific message. Valid values: 0 to 900.
-Id                       | String                       | Yes        | N/A     | An identifier for the message in this batch.
-MessageAttribute.`<N>`.Name  | String                   | No         | null    | See [here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation)
-MessageAttribute.`<N>`.Value | String or Integer or Binary | No            | null    | Message attributes allow you to provide structured metadata items (such as timestamps, geospatial data, signatures, and identifiers) about the message
-MessageAttribute.`<N>`.Type     | String                | No         | null    | Type of MessageAttribute.N.Value determined by MessageAttribute.N.Type
-MessageBody              | String                       | Yes        | N/A     | The message to send. The maximum string size is 256 KB.
-MessageDeduplicationId   | String                       | No         | null    | This parameter applies only to FIFO (first-in-first-out) queues. The token used for deduplication of sent messages. If a message with a particular MessageDeduplicationId is sent successfully, any messages sent with the same MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute deduplication interval
-MessageGroupId           | String                       | No         | null    | This parameter applies only to FIFO (first-in-first-out) queues.The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order)
+DelaySeconds             | integer                      | No         | null    | The number of seconds to delay a specific message. Valid values: 0 to 900.
+Id                       | string                       | Yes        | N/A     | An identifier for the message in this batch.
+MessageAttribute.`<N>`.Name  | string                   | No         | null    | See [here](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation)
+MessageAttribute.`<N>`.Value | string or integer or blob | No            | null    | Message attributes allow you to provide structured metadata items (such as timestamps, geospatial data, signatures, and identifiers) about the message
+MessageAttribute.`<N>`.Type     | string                | No         | null    | Type of MessageAttribute.N.Value determined by MessageAttribute.N.Type
+MessageBody              | string                       | Yes        | N/A     | The message to send. The maximum string size is 256 KB.
+MessageDeduplicationId   | string                       | No         | null    | This parameter applies only to FIFO (first-in-first-out) queues. The token used for deduplication of sent messages. If a message with a particular MessageDeduplicationId is sent successfully, any messages sent with the same MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute deduplication interval
+MessageGroupId           | string                       | No         | null    | This parameter applies only to FIFO (first-in-first-out) queues.The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order)
 
 ##### Example
 <a id="idb"></a>
@@ -155,13 +152,13 @@ Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueSer
 
 Parameter               | Type                 | Required | Default | Description
 ----------------------  | ----------------- | -------- | ------- | -----
-QueueUrl                | String               | Yes      | N/A     | The URL of the Amazon SQS queue from which messages are deleted
-AttributeName.`<N>`        | array of Strings    | No        | null    | A list of attributes that need to be returned along with each message. See api document for details
-MaxNumberOfMessages     | Integer              | No       | null    | The maximum number of messages to return. Between 1 and 10 messages may be selected to be returned
-MessageAttributeName.`<N>`  | array of Strings    | No        | null    | The name of the message attribute, where N is the index
-ReceiveRequestAttemptId | String               | No       | null    | This parameter applies only to FIFO (first-in-first-out) queues.The token used for deduplication of ReceiveMessage calls. If a networking issue occurs after a ReceiveMessage action, and instead of a response you receive a generic error, you can retry the same action with an identical ReceiveRequestAttemptId
-VisibilityTimeout       | Integer              | No       | null     | The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request
-WaitTimeSeconds         | Integer              | No       | null     | The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds
+QueueUrl                | string               | Yes      | N/A     | The URL of the Amazon SQS queue from which messages are deleted
+AttributeName.`<N>`        | array of strings    | No        | null    | A list of attributes that need to be returned along with each message. See api document for details
+MaxNumberOfMessages     | integer              | No       | null    | The maximum number of messages to return. Between 1 and 10 messages may be selected to be returned
+MessageAttributeName.`<N>`  | array of strings    | No        | null    | The name of the message attribute, where N is the index
+ReceiveRequestAttemptId | string               | No       | null    | This parameter applies only to FIFO (first-in-first-out) queues.The token used for deduplication of ReceiveMessage calls. If a networking issue occurs after a ReceiveMessage action, and instead of a response you receive a generic error, you can retry the same action with an identical ReceiveRequestAttemptId
+VisibilityTimeout       | integer              | No       | null     | The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request
+WaitTimeSeconds         | integer              | No       | null     | The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds
 
 ##### Example
 <a id="ida"></a>
@@ -197,10 +194,10 @@ Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueSer
 
 ##### AWSSQS_ACTION_DELETE_MESSAGE `params`
 
-Parameter    | Type    |Required | Description             
+Parameter    | Type    |Required | Description
 -------------|-------- |-------- |--------------------------
-QueueUrl     | String  | Yes     | The URL of the Amazon SQS queue from which messages are deleted
-ReceiptHandle| String  | Yes     | The receipt handle associated with the message to delete
+QueueUrl     | string  | Yes     | The URL of the Amazon SQS queue from which messages are deleted
+ReceiptHandle| string  | Yes     | The receipt handle associated with the message to delete
 
 ##### Example
 please refer to the ReceiveMessage [example](#ida) for how to obtain RECEIPT_HANDLE
@@ -227,17 +224,17 @@ Please view the [AWS documentation](http://docs.aws.amazon.com/AWSSimpleQueueSer
 
 Parameter                          | Type    | Required | Description
 -----------------------------------|-------- |--------  |--------------------------
-QueueUrl                           | String  | Yes      | The URL of the Amazon SQS queue from which messages are deleted
-DeleteMessageBatchRequestEntry.`<N>`.`<X>` | String  | Yes      | A list of DeleteMessageBatchResultEntry items. Where N is the message entry number and X is the SendMessageBatchResultEntry parameter.
+QueueUrl                           | string  | Yes      | The URL of the Amazon SQS queue from which messages are deleted
+DeleteMessageBatchRequestEntry.`<N>`.`<X>` | string  | Yes      | A list of DeleteMessageBatchResultEntry items. Where N is the message entry number and X is the SendMessageBatchResultEntry parameter.
 
 
 
 ##### DeleteMessageBatchRequestEntry
 
-Parameter     | Type    | Required | Description             
+Parameter     | Type    | Required | Description
 ------------- |-------- |--------  | --------------------------
-Id            | String  | Yes      | An identifier for this particular receipt handle.
-ReceiptHandle | String  | Yes      | The receipt handle associated with the message to delete
+Id            | string  | Yes      | An identifier for this particular receipt handle.
+ReceiptHandle | string  | Yes      | The receipt handle associated with the message to delete
 
 ##### Example
 Please refer to the ReceiveMessage [example](#ida) for how to obtain RECEIPT_HANDLE.
@@ -264,19 +261,19 @@ The format of the response table general to all functions
 
 Key                   |       Type     | Description
 --------------------- | -------------- | -----------
-body                  | String         | AWS SQS response in a function specific structure that is json encoded.
-statuscode            | Integer        | http status code
-headers               | Table          | see headers
+body                  | string         | AWS SQS response in a function specific structure that is json encoded.
+statuscode            | integer        | http status code
+headers               | table          | see headers
 
 where `headers` includes
 
 Key                   |       Type       | Description
 --------------------- | --------------   | -----------
-x-amzn-requestid      | String           | Amazon request id
-content-type          | String           | Content type e.g text/XML
-date                  | String           | The date and time at which response was sent
-content-length        | String           | the length of the content
-x-amz-crc32           | String           | Checksum of the UTF-8 encoded bytes in the HTTP response
+x-amzn-requestid      | string           | Amazon request id
+content-type          | string           | Content type e.g text/XML
+date                  | string           | The date and time at which response was sent
+content-length        | string           | the length of the content
+x-amz-crc32           | string           | Checksum of the UTF-8 encoded bytes in the HTTP response
 
 
 # License
