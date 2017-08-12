@@ -12,7 +12,7 @@ the top of your agent code:
 ```
 
 **Note: [AWSRequestV4](https://github.com/electricimp/AWSRequestV4/)
-must be included to make the AWSSQS library work.**
+must be included before the AWSSQS library to make it work.**
 
 ## Class Usage
 
