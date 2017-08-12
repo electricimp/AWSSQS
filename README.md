@@ -66,7 +66,7 @@ Action Type                                                               | Desc
 Delivers a message to the specified queue.
 Please view the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html) for more information
 
-##### Action parameters ([`params`](#action_actionType_params_cb) argument)
+##### Action parameters ([`params`](#actionactiontype-params-cb) argument)
 
 Parameter                    | Type                        | Required | Default | Description
 ---------------------------- |---------------------------- |----------|-------- | ----------
@@ -97,7 +97,7 @@ sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(res) {
 Delivers up to ten messages to the specified queue.
 Please view the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html) for more information
 
-##### Action parameters ([`params`](#action_actionType_params_cb) argument)
+##### Action parameters ([`params`](#actionactiontype-params-cb) argument)
 
 Parameter                                | Type    | Required   | Description
 -----------------------------------------|---------|------------|-----------
@@ -136,7 +136,7 @@ sqs.action(AWSSQS_ACTION_SEND_MESSAGE_BATCH, messageBatchParams, function(res) {
 Retrieves one or more messages (up to 10), from the specified queue.
 Please view the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html) for more information
 
-##### Action parameters ([`params`](#action_actionType_params_cb) argument)
+##### Action parameters ([`params`](#actionactiontype-params-cb) argument)
 
 Parameter                   | Type                 | Required | Default | Description
 --------------------------- | -------------------- | -------- | ------- | -----
@@ -174,7 +174,7 @@ sqs.action(AWSSQS_ACTION_RECEIVE_MESSAGE, receiveParams, function(res) {
 Deletes the specified message from the specified queue. You specify the message by using the message's receipt handle and not the MessageId you receive when you send the message.
 Please view the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessage.html) for more information
 
-##### Action parameters ([`params`](#action_actionType_params_cb) argument)
+##### Action parameters ([`params`](#actionactiontype-params-cb) argument)
 
 Parameter    | Type    |Required | Description
 -------------|-------- |-------- |--------------------------
@@ -200,7 +200,7 @@ sqs.action(AWSSQS_ACTION_DELETE_MESSAGE, deleteParams, function(res) {
 Deletes up to ten messages from the specified queue. This is a batch version of DeleteMessage. The result of the action on each message is reported individually in the response.
 Please view the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessageBatch.html) for more information
 
-##### Action parameters ([`params`](#action_actionType_params_cb) argument)
+##### Action parameters ([`params`](#actionactiontype-params-cb) argument)
 
 Parameter                                  | Type    | Required | Description
 -------------------------------------------|-------- |--------  |--------------------------
