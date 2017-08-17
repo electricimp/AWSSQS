@@ -4,7 +4,7 @@ This demo will show you how to send, receive and delete a message in a SQS queue
 
 As the sample code includes the private key verbatim in the source, it should be treated carefully, and not checked into version control!
 
-## Setting up AIM Policy
+## Setting up IAM Policy
 
 1. Select `Services` link (on the top left of the page) and them type `IAM` in the search line
 1. Select `IAM Manage User Access and Encryption Keys` item
@@ -21,7 +21,7 @@ As the sample code includes the private key verbatim in the source, it should be
 1. Give your policy a name, for example, `allow-sqs` and type in into the `Policy Name` field
 1. Press `Create Policy`
 
-## Setting up the AIM User
+## Setting up the IAM User
 
 1. Select `Services` link (on the top left of the page) and them type `IAM` in the search line
 1. Select the `IAM Manage User Access and Encryption Keys` item
