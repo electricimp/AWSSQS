@@ -27,31 +27,31 @@
 
 
 // Configure these parameters see example/README.md for details
-const AWS_SQS_ACCESS_KEY_ID = "YOUR_ACCESS_KEY_ID_HERE";
+const AWS_SQS_ACCESS_KEY_ID     = "YOUR_ACCESS_KEY_ID_HERE";
 const AWS_SQS_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_HERE";
-const AWS_SQS_REGION = "YOUR_REGION_HERE";
-const AWS_SQS_URL = "YOUR_SQS_URL_HERE";
+const AWS_SQS_REGION            = "YOUR_REGION_HERE";
+const AWS_SQS_URL               = "YOUR_SQS_URL_HERE";
 
 // initialise the class
 sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
 
 // finds the ReceiptHandle
 function receiptFinder(messageBody) {
-    local start = messageBody.find("<ReceiptHandle>");
-    local finish = messageBody.find("/ReceiptHandle>");
+    local start   = messageBody.find("<ReceiptHandle>");
+    local finish  = messageBody.find("/ReceiptHandle>");
     local receipt = messageBody.slice(start + 15, finish - 1);
     return receipt;
 };
 
 // Send Message Parameters
 local sendParams = {
-    "QueueUrl": AWS_SQS_URL,
-    "MessageBody": "testMessage"
+    "QueueUrl"    : AWS_SQS_URL,
+    "MessageBody" : "testMessage"
 };
 
 // Receive Message Parameters
 local receiveParams = {
-    "QueueUrl": AWS_SQS_URL
+    "QueueUrl" : AWS_SQS_URL
 };
 
 // send a message to the queue
