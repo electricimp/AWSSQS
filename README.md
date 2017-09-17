@@ -29,7 +29,7 @@ secretAccessKey        | string         | IAM Secret Access Key
 
 ```squirrel
 const AWS_SQS_ACCESS_KEY_ID     = "YOUR_ACCESS_KEY_ID_HERE";
-const AWS_SQS_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_ID_HERE";
+const AWS_SQS_SECRET_ACCESS_KEY = "YOUR_SECRET_ACCESS_KEY_HERE";
 const AWS_SQS_URL               = "YOUR_SQS_URL_HERE";
 const AWS_SQS_REGION            = "YOUR_REGION_HERE";
 
