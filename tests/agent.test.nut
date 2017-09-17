@@ -25,6 +25,9 @@
 
 // Please Enter your AWS keys, region and SQS URL
 
+@include "github:electricimp/AWSRequestV4/AWSRequestV4.class.nut"
+@include "AWSSQS.agent.lib.nut"
+
 const AWS_TEST_ACCESS_KEY_ID = "@{SQS_ACCESS_KEY_ID}";
 const AWS_TEST_SECRET_ACCESS_KEY = "@{SQS_SECRET_ACCESS_KEY}";
 const AWS_TEST_SQS_URL = "@{SQS_URL}";
@@ -50,7 +53,6 @@ class AgentTestCase extends ImpTestCase {
     function setUp() {
         _sqs = AWSSQS(AWS_TEST_REGION, AWS_TEST_ACCESS_KEY_ID, AWS_TEST_SECRET_ACCESS_KEY);
     }
-
 
     // testing successfully sending a message. Checks against http ok response
     function testSendMessage() {
@@ -254,7 +256,6 @@ class AgentTestCase extends ImpTestCase {
         };
         // finds the receipt handle string in the body string.
         local receiptFinder = function(messageBody) {
-
             local start = messageBody.find("<ReceiptHandle>");
             local finish = messageBody.find("/ReceiptHandle>");
             local receipt = messageBody.slice((start + 15), (finish - 1));
