@@ -1,5 +1,8 @@
 # AWSSQS - Amazon Simple Queue Service Library
 
+[![Build Status](https://api.travis-ci.org/electricimp/AWSSQS.svg?branch=master)](https://travis-ci.org/electricimp/AWSSQS)
+
+
 The helper library to implement and perform
 [Amazon SQS](https://aws.amazon.com/documentation/sqs/) actions from agent code.
 
@@ -40,7 +43,7 @@ sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
 ## Class Methods
 
 ### action(actionType, params, cb)
-Performs a specified action (e.g send a message) with the 
+Performs a specified action (e.g send a message) with the
 required parameters (`params`) for the specified `action`.
 
 Parameter         |       Type     | Description
