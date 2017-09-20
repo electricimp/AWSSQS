@@ -28,13 +28,13 @@ The AWSQS object constructor. It takes the following parameters:
 #### Example
 
 ```squirrel
-const AWS_SQS_ACCESS_KEY_ID     = "&lt;YOUR_ACCESS_KEY_ID_HERE&gt;";
-const AWS_SQS_SECRET_ACCESS_KEY = "&lt;YOUR_SECRET_ACCESS_KEY_HERE&gt;";
-const AWS_SQS_URL               = "&lt;YOUR_SQS_URL_HERE&gt;";
-const AWS_SQS_REGION            = "&lt;YOUR_REGION_HERE&gt;";
+const AWS_SQS_ACCESS_KEY_ID     = "<YOUR_ACCESS_KEY_ID_HERE>";
+const AWS_SQS_SECRET_ACCESS_KEY = "<YOUR_SECRET_ACCESS_KEY_HERE>";
+const AWS_SQS_URL               = "<YOUR_SQS_URL_HERE>";
+const AWS_SQS_REGION            = "<YOUR_REGION_HERE>";
 
 // Initialize the class
-sqs &lt;- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
+sqs <- AWSSQS(AWS_SQS_REGION, AWS_SQS_ACCESS_KEY_ID, AWS_SQS_SECRET_ACCESS_KEY);
 ```
 
 ## Class Methods
@@ -103,7 +103,7 @@ Delivers up to ten messages to the specified queue. Please view the [AWS SQS doc
 | Parameter | Type | Required? | Default | Description |
 | --- | --- | --- | --- | --- | 
 | *DelaySeconds* | Integer | No | `null` | The number of seconds to delay a specific message. Valid values: 0 to 900
-| *MessageAttribute.&lt;N&gt;.Name* | String | No | `null` | See the [AWS SQS documentation] |(http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation) for more details |
+| *MessageAttribute.&lt;N&gt;.Name* | String | No | `null` | See the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation) for more details |
 | *MessageAttribute.&lt;N&gt;.Value* | String, integer or blob | No | `null` | Message attributes allow you to provide structured metadata (such as timestamps, geospatial data, signatures nd identifiers) about the message |
 | *MessageAttribute.&lt;N&gt;.Type* | String | No | `null` | Type of *MessageAttribute.&lt;N&gt;.Value* determined by *MessageAttribute.&lt;N&gt;.Type* |
 | *MessageBody* | String | Yes | N/A | The message to send. The maximum string size: 256KB |
@@ -144,8 +144,9 @@ Retrieves one or more messages (up to ten), from the specified queue. Please vie
 
 ```squirrel
 local receiptHandleFinder = function(messageBody) {
-    local start   = messageBody.find("&lt;ReceiptHandle&gt;");
-    local finish  = messageBody.find("/ReceiptHandle&gt;");
+    // Extract the reciept handle from the returned XML
+    local start   = messageBody.find("<ReceiptHandle>");
+    local finish  = messageBody.find("/ReceiptHandle>");
     local receipt = messageBody.slice((start + 15), (finish - 1));
     return receiptHandle;
 };
@@ -176,7 +177,7 @@ Deletes the specified message from the specified queue. You specify the message 
 Please refer to the Receive Message example, above, to see how you obtain *receiptHandle*.
 
 ```squirrel
-deleteParams &lt;- {
+deleteParams <- {
     "QueueUrl": "https://some.aws.sqs.url",
     "ReceiptHandle": receiptHandle
 }
