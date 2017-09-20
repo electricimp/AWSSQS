@@ -48,7 +48,7 @@ This demo will show you how to send, receive and delete a message in an SQS (Sim
 1. Click on ‘Create user’
 1. Note your Access Key ID and Secret Access Key
 
-## Configure the API keys for SQS
+## Configure the API Keys for SQS
 
 At the top of *sample.agent.nut* there are four constants that need to be configured:
 
@@ -60,5 +60,7 @@ At the top of *sample.agent.nut* there are four constants that need to be config
 | *AWS_SQS_URL* | Your SQS queue URL |
 
 The last three constants should be populated with the values gathered by performing the steps above.
+
+## License
 
 The AWSSQS library is licensed under the [MIT License](../LICENSE).
