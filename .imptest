@@ -1,0 +1,14 @@
+{
+    "modelId": "56FYpVVkqSRX" /* Test Model K */,
+    "devices": [
+        "30000c2a690bdc21" /* K */
+    ],
+    "agentFile": false,
+    "deviceFile": false,
+    "stopOnFailure": false,
+    "timeout": 30,
+    "tests": [
+        "*.test.nut",
+        "tests/**/*.test.nut"
+    ]
+}
