@@ -25,7 +25,7 @@
 
 // Please Enter your AWS keys, region and SQS URL
 
-@include "github:electricimp/AWSRequestV4/AWSRequestV4.class.nut"
+@include "https://raw.githubusercontent.com/electricimp/AWSRequestV4/master/AWSRequestV4.class.nut"
 @include "AWSSQS.agent.lib.nut"
 
 const AWS_TEST_ACCESS_KEY_ID = "@{SQS_ACCESS_KEY_ID}";
