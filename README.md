@@ -1,7 +1,5 @@
 # AWSSQS &mdash; Amazon Simple Queue Service Library
 
-[![Build Status](https://api.travis-ci.org/electricimp/AWSSQS.svg?branch=master)](https://travis-ci.org/electricimp/AWSSQS)
-
 This library allows [Amazon SQS](https://aws.amazon.com/documentation/sqs/) actions to be performed by agent code.
 
 **To add this library to your model, add the following lines to the top of your agent code:**
@@ -12,6 +10,8 @@ This library allows [Amazon SQS](https://aws.amazon.com/documentation/sqs/) acti
 ```
 
 The [AWSRequestV4](https://github.com/electricimp/AWSRequestV4/) must be included **before** the AWSSQS library.
+
+![Build Status](https://cse-ci.electricimp.com/app/rest/builds/buildType:(id:Awssqs_BuildAndTest)/statusIcon)
 
 ## Class Usage
 
