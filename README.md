@@ -1,3 +1,4 @@
+
 # AWSSQS &mdash; Amazon Simple Queue Service Library
 
 This library allows [Amazon SQS](https://aws.amazon.com/documentation/sqs/) actions to be performed by agent code.
@@ -69,9 +70,9 @@ Delivers a message to the specified queue. Please view the [AWS SQS documentatio
 | --- | --- | --- | --- | --- | 
 | *QueueUrl* | String | Yes | N/A | The URL of the Amazon SQS queue from which messages are sent |
 | *DelaySeconds* | Integer | No | `null` | The number of seconds to delay a specific message. Valid values: 0 to 900
-| *MessageAttribute.&lt;N&gt;.Name* | String | No | `null` | See the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation) for more details |
-| *MessageAttribute.&lt;N&gt;.Value* | String, integer or blob | No | `null` | Message attributes allow you to provide structured metadata (such as timestamps, geospatial data, signatures nd identifiers) about the message |
-| *MessageAttribute.&lt;N&gt;.Type* | String | No | `null` | Type of *MessageAttribute.&lt;N&gt;.Value* determined by *MessageAttribute.&lt;N&gt;.Type* |
+| *MessageAttribute.&lt;N&gt;.Name* | String | No | `null` | See the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation) for more details. *&lt;N&gt;* Starting from 1 |
+| *MessageAttribute.&lt;N&gt;.Value.StringValue* | String, integer or blob | No | `null` | Message attributes allow you to provide structured metadata (such as timestamps, geospatial data, signatures nd identifiers) about the message |
+| *MessageAttribute.&lt;N&gt;.Value.DataType* | String | No | `null` | Type of *MessageAttribute.&lt;N&gt;.Value.StringValue* determined by *MessageAttribute.&lt;N&gt;.Value.DataType* |
 | *MessageBody* | String | Yes | N/A | The message to send. The maximum string size: 256KB |
 | *MessageDeduplicationId* | String | No | `null` | This parameter applies only to FIFO (first in, first out) queues. The token used for deduplication of sent messages. If a message with a particular *MessageDeduplicationId* is sent successfully, any messages sent with the same *MessageDeduplicationId* are accepted successfully but aren’t delivered during the five-minute deduplication interval |
 | *MessageGroupId* | String | No | `null` | This parameter applies only to FIFO (first in, first out) queues. The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (messages in different message groups might be processed out of order) |
@@ -82,6 +83,25 @@ Delivers a message to the specified queue. Please view the [AWS SQS documentatio
 local sendParams = {
     "QueueUrl"    : "https://some.aws.sqs.url",
     "MessageBody" : "testMessage"
+};
+
+sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(response) {
+    server.log(http.jsonencode(response));
+});
+```
+
+##### Example with Message Attributes
+
+```squirrel
+local sendParams = {
+    "QueueUrl"                              : "https://some.aws.sqs.url",
+    "MessageAttribute.1.Name"               : "test_attribute_name_1",
+    "MessageAttribute.1.Value.StringValue"  : "test_attribute_value_1",
+    "MessageAttribute.1.Value.DataType"     : "String",
+    "MessageAttribute.2.Name"               : "test_attribute_name_2",
+    "MessageAttribute.2.Value.StringValue"  : "test_attribute_value_2",
+    "MessageAttribute.2.Value.DataType"     : "String",
+    "MessageBody"                           : "testMessage"
 };
 
 sqs.action(AWSSQS_ACTION_SEND_MESSAGE, sendParams, function(response) {
@@ -103,12 +123,13 @@ Delivers up to ten messages to the specified queue. Please view the [AWS SQS doc
 | Parameter | Type | Required? | Default | Description |
 | --- | --- | --- | --- | --- | 
 | *DelaySeconds* | Integer | No | `null` | The number of seconds to delay a specific message. Valid values: 0 to 900
-| *MessageAttribute.&lt;N&gt;.Name* | String | No | `null` | See the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation) for more details |
-| *MessageAttribute.&lt;N&gt;.Value* | String, integer or blob | No | `null` | Message attributes allow you to provide structured metadata (such as timestamps, geospatial data, signatures nd identifiers) about the message |
-| *MessageAttribute.&lt;N&gt;.Type* | String | No | `null` | Type of *MessageAttribute.&lt;N&gt;.Value* determined by *MessageAttribute.&lt;N&gt;.Type* |
+| *MessageAttribute.&lt;N&gt;.Name* | String | No | `null` | See the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation) for more details.  *&lt;N&gt;* Starting from 1 |
+| *MessageAttribute.&lt;N&gt;.Value.StringValue* | String, integer or blob | No | `null` | Message attributes allow you to provide structured metadata (such as timestamps, geospatial data, signatures nd identifiers) about the message |
+| *MessageAttribute.&lt;N&gt;.Value.DataType* | String | No | `null` | Type of *MessageAttribute.&lt;N&gt;.Value.StringValue* determined by *MessageAttribute.&lt;N&gt;.Value.DataType* |
 | *MessageBody* | String | Yes | N/A | The message to send. The maximum string size: 256KB |
 | *MessageDeduplicationId* | String | No | `null` | This parameter applies only to FIFO (first in, first out) queues. The token used for deduplication of sent messages. If a message with a particular *MessageDeduplicationId* is sent successfully, any messages sent with the same *MessageDeduplicationId* are accepted successfully but aren’t delivered during the five-minute deduplication interval |
 | *MessageGroupId* | String | No | `null` | This parameter applies only to FIFO (first in, first out) queues. The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (messages in different message groups might be processed out of order) |
+
 
 ##### Example
 
@@ -126,6 +147,24 @@ sqs.action(AWSSQS_ACTION_SEND_MESSAGE_BATCH, messageBatchParams, function(respon
 });
 ```
 
+##### Example with Message Attributes
+
+```squirrel
+local messageBatchParams = {
+    "QueueUrl"                                                              : "https://some.aws.sqs.url",
+    "SendMessageBatchRequestEntry.1.Id"                                     : "m1",
+    "SendMessageBatchRequestEntry.1.MessageBody"                            : "testMessage1",
+    "SendMessageBatchRequestEntry.2.Id"                                     : "m2",
+    "SendMessageBatchRequestEntry.2.MessageAttribute.1.Name"                : "test_attribute_name_1",
+    "SendMessageBatchRequestEntry.2.MessageAttribute.1.Value.StringValue"   : "test_attribute_value_1",
+    "SendMessageBatchRequestEntry.2.MessageAttribute.1.Value.DataType"      : "String",    
+    "SendMessageBatchRequestEntry.2.MessageBody"                            : "testMessage2",
+};
+
+sqs.action(AWSSQS_ACTION_SEND_MESSAGE_BATCH, messageBatchParams, function(response) {
+    server.log(response.statuscode);
+});
+```
 #### *AWSSQS_ACTION_RECEIVE_MESSAGE*
 
 Retrieves one or more messages (up to ten), from the specified queue. Please view the [AWS SQS documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html) for more information.
